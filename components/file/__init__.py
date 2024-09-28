@@ -1,7 +1,7 @@
 import hashlib
 import logging
 from pathlib import Path
-from puremagic import Magic
+from puremagic import from_bytes
 
 import esphome.codegen as cg
 import esphome.config_validation as cv
@@ -131,10 +131,11 @@ async def to_code(config):
     with open(path, "rb") as f:
         data = f.read()
 
-    magic = Magic(mime=True)
-    file_type = magic.from_buffer(data)
-
-    if "wav" in file_type:
+    # Use puremagic to determine the file type
+    file_type_info = from_bytes(data)
+    
+    # Extract the file extension from puremagic
+    if file_type_info and file_type_info[0].extension == "wav":
         data = _trim_wav_file(data)
 
     rhs = [HexInt(x) for x in data]
