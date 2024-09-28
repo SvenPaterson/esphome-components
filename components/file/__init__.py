@@ -1,7 +1,7 @@
 import hashlib
 import logging
 from pathlib import Path
-from magic import Magic
+from puremagic import Magic
 
 import esphome.codegen as cg
 import esphome.config_validation as cv
