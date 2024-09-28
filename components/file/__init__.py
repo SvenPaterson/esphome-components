@@ -132,10 +132,10 @@ async def to_code(config):
         data = f.read()
 
     # Use puremagic to detect the file type from raw bytes
-    file_type_info = from_string(data)
+    file_extension = from_string(data)
     
-    # Extract the most likely file extension
-    if file_type_info and file_type_info[0].extension == ".wav":
+    # Directly compare the result to ".wav"
+    if file_extension == ".wav":
         data = _trim_wav_file(data)
 
     rhs = [HexInt(x) for x in data]
